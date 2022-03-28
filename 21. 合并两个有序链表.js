@@ -19,47 +19,34 @@
  */
  var mergeTwoLists = function(list1, list2) {
 
-    let result = null,
-        current = null,
-        current1 = list1,
-        current2 = list2;
+    if(list1 === null) {
+        return list2;
+    }else if(list2 === null) {
+        return list1;
+    }
 
-    // 确定头节点
-    if(current1 === null) {
-        return current2;
-    }else if(current2 === null) {
-        return current1;
-    }else {
-        if(current1.val <= current2.val) {
-            result = current1;
-            current = current1;
-            current1 = current1.next;
+    let dummyHead = new ListNode(0),
+        current = dummyHead;
+
+    while(list1 !== null && list2 !== null) {
+        if(list1.val <= list2.val) {
+            current.next = list1;
+            current = current.next;
+            list1 = list1.next;
         }else {
-            result = current2;
-            current = current2;
-            current2 = current2.next;
+            current.next = list2;
+            current = current.next;
+            list2 = list2.next;
         }
     }
 
-    while(current1 !== null && current2 !== null) {
-        if(current1.val <= current2.val) {
-            current.next = current1;
-            current = current.next;
-            current1 = current1.next;
-        }else {
-            current.next = current2;
-            current = current.next;
-            current2 = current2.next;
-        }
+    if(list1 !== null) {
+        current.next = list1;
+    }else if(list2 !== null) {
+        current.next = list2;
     }
 
-    if(current1 !== null) {
-        current.next = current1;
-    }else if(current2 !== null) {
-        current.next = current2;
-    }
-
-    return result;
+    return dummyHead.next;
 };
 
 /*
